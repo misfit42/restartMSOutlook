@@ -23,7 +23,7 @@ def process_mon_restart(proc: str, chk_time: int = 300, startup_time: int = 30):
     # run 4-ever
     while True:
         # check if proc running
-        proc_info = [p.info for p in psutil.process_iter(attrs=['name', 'exe']) if proc in p.info['name']]
+        proc_info = dict([p.info for p in psutil.process_iter(attrs=['name', 'exe']) if proc in p.info['name']])
         try:
             while (proc_info[0]["name"] in (p.name() for p in psutil.process_iter())):
                 time.sleep(chk_time)
@@ -34,7 +34,8 @@ def process_mon_restart(proc: str, chk_time: int = 300, startup_time: int = 30):
         except IndexError:
             logging.info(f'{proc}: is not running on startup')
             proc = str(input('Process you entered does not exist, please enter a valid process name:'))
-            continue
+        continue
+        proc_info = dict([p.info for p in psutil.process_iter(attrs=['name', 'exe']) if proc in p.info['name']])
         subprocess.run(pathlib.Path(proc_info[0]['exe'])) # uses pathlib.Path which makes it OS independant
         logging.info(f'{proc_info[0]["name"]} has been restarted')
         # give process time to start up
