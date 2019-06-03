@@ -30,8 +30,8 @@ def process_mon_restart(proc: str, chk_time: int = 300, startup_time: int = 30):
     while True:
         # check if process running, use casefold to compensate for mixed case executable names.
         # Save as list to preserve info for later useage.
-        proc_info = [p.info for p in psutil.process_iter(attrs=[ 'name', 'exe' ]) if
-                      proc.casefold() in p.info[ 'name' ].casefold()]
+        proc_info = [ p.info for p in psutil.process_iter(attrs=[ 'name', 'exe' ]) if
+                      proc.casefold() in p.info[ 'name' ].casefold() ]
         logging.info(f'Content of procInfo:  {proc_info}; '
                      f'this should contain the entered executable')
         while (proc_info[ 0 ][ "name" ] in (p.name() for p in psutil.process_iter())):
