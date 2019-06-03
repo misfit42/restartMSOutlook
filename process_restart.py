@@ -20,7 +20,7 @@ def process_mon_restart(proc: str, chk_time: int = 300, startup_time: int = 30):
     :proc: process name to keep running
     :chk_time: time in seconds to wait until next check
     :startup_time: time in seconds to wait after process startup until next check is performed
-    #TODO return error
+    #TODO handle error
     :return: Error if entered process is not running on start of process_mon_restart
     """
 
